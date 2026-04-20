@@ -1,6 +1,7 @@
 package GiorgiaFormicola.U5_W3_D1.security;
 
 import GiorgiaFormicola.U5_W3_D1.entities.Employee;
+import GiorgiaFormicola.U5_W3_D1.exceptions.UnauthorizedException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,5 +24,13 @@ public class TokenTools {
                 .subject(String.valueOf(employee.getId()))
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                 .compact();
+    }
+
+    public void verifyToken(String token) {
+        try {
+            Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes())).build().parse(token);
+        } catch (Exception ex) {
+            throw new UnauthorizedException("Some issues with your token occurred! Try login again");
+        }
     }
 }
