@@ -70,6 +70,12 @@ public class ErrorsHandler {
         return new ErrorDTO("Deletion of the desired resource avoided", LocalDateTime.now());
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorDTO handleUnauthorizedException(UnauthorizedException ex) {
+        return new ErrorDTO(ex.getMessage(), LocalDateTime.now());
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorDTO handleGenericException(Exception ex) {
