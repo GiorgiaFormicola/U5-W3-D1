@@ -29,7 +29,7 @@ public class AuthController {
             List<String> errors = validationResult.getAllErrors().stream().map(error -> error.getDefaultMessage()).toList();
             throw new PayloadValidationException(errors);
         }
-        return this.authService.checkCredentialsAndGenerateToken(body);
+        return new LoginResponseDTO(this.authService.checkCredentialsAndGenerateToken(body));
     }
 
     @PostMapping("/register")
