@@ -30,7 +30,7 @@ public class TokenTools {
         try {
             Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes())).build().parse(token);
         } catch (Exception ex) {
-            throw new UnauthorizedException("Some issues with your token occurred! Try login again");
+            throw new UnauthorizedException("Some issues with your token occurred! Try login again!");
         }
     }
 }
