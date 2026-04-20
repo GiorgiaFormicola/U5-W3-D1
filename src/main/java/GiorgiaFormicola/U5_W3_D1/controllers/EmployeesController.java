@@ -21,7 +21,7 @@ import java.util.UUID;
 public class EmployeesController {
     private EmployeesService employeesService;
 
-    @PostMapping
+    /*@PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Employee saveNewEmployee(@RequestBody @Validated EmployeeDTO body, BindingResult validationResult) {
         if (validationResult.hasErrors()) {
@@ -29,7 +29,7 @@ public class EmployeesController {
             throw new PayloadValidationException(errors);
         }
         return this.employeesService.save(body);
-    }
+    }*/
 
     @GetMapping
     public Page<Employee> getEmployees(

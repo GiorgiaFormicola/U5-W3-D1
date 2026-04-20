@@ -1,13 +1,19 @@
 package GiorgiaFormicola.U5_W3_D1.controllers;
 
+import GiorgiaFormicola.U5_W3_D1.entities.Employee;
+import GiorgiaFormicola.U5_W3_D1.exceptions.PayloadValidationException;
+import GiorgiaFormicola.U5_W3_D1.payloads.EmployeeDTO;
 import GiorgiaFormicola.U5_W3_D1.payloads.LoginDTO;
 import GiorgiaFormicola.U5_W3_D1.payloads.LoginResponseDTO;
 import GiorgiaFormicola.U5_W3_D1.services.AuthService;
+import GiorgiaFormicola.U5_W3_D1.services.EmployeesService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -15,9 +21,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private AuthService authService;
+    private EmployeesService employeesService;
 
     @PostMapping("/login")
     public LoginResponseDTO login(@RequestBody LoginDTO body) {
         return this.authService.checkCredentialsAndGenerateToken(body);
+    }
+
+    @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Employee saveNewEmployee(@RequestBody @Validated EmployeeDTO body, BindingResult validationResult) {
+        if (validationResult.hasErrors()) {
+            List<String> errors = validationResult.getAllErrors().stream().map(error -> error.getDefaultMessage()).toList();
+            throw new PayloadValidationException(errors);
+        }
+        return this.employeesService.save(body);
     }
 }
