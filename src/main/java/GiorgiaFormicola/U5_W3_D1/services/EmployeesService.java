@@ -33,7 +33,7 @@ public class EmployeesService {
             throw new BadRequestException("Email " + body.email() + " already in use!");
         if (employeesRepository.existsByUsername(body.username()))
             throw new BadRequestException("Username " + body.username() + " already in use!");
-        Employee newEmployee = new Employee(body.username(), body.name(), body.surname(), body.email());
+        Employee newEmployee = new Employee(body.username(), body.name(), body.surname(), body.email(), body.password());
         Employee savedEmployee = this.employeesRepository.save(newEmployee);
         log.info("Employee with id " + savedEmployee.getId() + " successfully saved!");
         return savedEmployee;

@@ -19,7 +19,8 @@ public class AuthService {
     public LoginResponseDTO checkCredentialsAndGenerateToken(LoginDTO body) {
         try {
             Employee found = this.employeesService.findByEmail(body.email());
-            /*if(!found.getPassword().equals(body.password())) throw new UnauthorizedException("Wrong credentials supplied");*/
+            if (!found.getPassword().equals(body.password()))
+                throw new UnauthorizedException("Wrong credentials supplied");
             String accessToken = this.tokenTools.generateToken(found);
             return new LoginResponseDTO(accessToken);
         } catch (NotFoundException ex) {

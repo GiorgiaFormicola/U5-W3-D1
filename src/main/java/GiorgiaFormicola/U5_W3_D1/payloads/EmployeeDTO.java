@@ -13,8 +13,13 @@ public record EmployeeDTO(
         @NotBlank(message = "Surname is mandatory and it can't contain only blank spaces")
         @Size(min = 2, message = "Surname must contain minimum 2 characters")
         String surname,
-        @NotNull(message = "Email is mandatory")
+        @NotBlank(message = "Email is mandatory")
         @Email(message = "Email must follow a valid email format")
-        String email
+        String email,
+        @NotBlank(message = "Password is mandatory")
+        @Size(min = 8, message = "Password must contain at least 8 characters")
+        @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$", message = "Password must follow a valid password format")
+        String password
+
 ) {
 }
