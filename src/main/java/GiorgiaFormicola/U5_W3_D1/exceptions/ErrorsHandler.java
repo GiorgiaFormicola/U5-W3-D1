@@ -76,10 +76,10 @@ public class ErrorsHandler {
         return new ErrorDTO(ex.getMessage(), LocalDateTime.now());
     }
 
-    @ExceptionHandler(Exception.class)
+    /*@ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorDTO handleGenericException(Exception ex) {
         ex.printStackTrace();
         return new ErrorDTO("Oops, a server error occurred!", LocalDateTime.now());
-    }
+    }*/
 }

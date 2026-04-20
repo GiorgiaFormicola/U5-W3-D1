@@ -1,11 +1,12 @@
 package GiorgiaFormicola.U5_W3_D1.payloads;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record LoginDTO(
-        @NotNull(message = "Email is mandatory")
+        @NotBlank(message = "Email is mandatory")
         @Email(message = "Email must follow a valid email format")
         String email,
         @NotNull(message = "Password is mandatory")

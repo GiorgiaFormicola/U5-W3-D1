@@ -24,7 +24,11 @@ public class AuthController {
     private EmployeesService employeesService;
 
     @PostMapping("/login")
-    public LoginResponseDTO login(@RequestBody LoginDTO body) {
+    public LoginResponseDTO login(@RequestBody @Validated LoginDTO body, BindingResult validationResult) {
+        if (validationResult.hasErrors()) {
+            List<String> errors = validationResult.getAllErrors().stream().map(error -> error.getDefaultMessage()).toList();
+            throw new PayloadValidationException(errors);
+        }
         return this.authService.checkCredentialsAndGenerateToken(body);
     }
 
